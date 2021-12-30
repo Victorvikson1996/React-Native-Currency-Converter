@@ -1,46 +1,49 @@
 import React from "react";
-import {
-  View,
-  Text,
-  TouchableOpacity,
-  SafeAreaView,
-  StyleSheet,
-} from "react-native";
+import { SafeAreaView, ScrollView, Linking, Alert } from "react-native";
 
 import colors from "../Constants/colors";
 
-import { RowItem } from "../Components/RowItem";
+import { RowItem, RowSeperator } from "../Components/RowItem";
 
 import { Entypo } from "@expo/vector-icons";
-import { color } from "react-native/Libraries/Components/View/ReactNativeStyleAttributes";
 
-const styles = StyleSheet.create({
-  seperator: {
-    backgroundColor: colors.border,
-    height: StyleSheet.hairlineWidth,
-    marginLeft: 20,
-  },
-});
+const openLink = (url) => {
+  return Linking.openURL(url).catch(() => {
+    Alert.alert("Sorry, something went wrong", "Please try gain later");
+  });
+};
 
 export default () => {
   return (
-    <SafeAreaView>
-      <RowItem
-        rightIcon={<Entypo name="chevron-right" size={20} color={color.blue} />}
-      />
-      <View style={styles.seperator} />
+    <SafeAreaView style={{ flex: 1 }}>
+      <ScrollView>
+        <RowItem
+          text="Themes"
+          onPress={() => alert("todo!")}
+          rightIcon={
+            <Entypo name="chevron-right" size={20} color={colors.blue} />
+          }
+        />
+        <RowSeperator />
 
-      <TouchableOpacity style={styles.row}>
-        <Text style={styles.text}>React Native Basics</Text>
-        <Entypo name="export" size={20} color={color.blue} />
-      </TouchableOpacity>
+        <RowItem
+          text="React Native Basics"
+          onPress={() =>
+            openLink(
+              "https://learn.reactnativeschool.com/p/react-native-basics-build-a-currency-converter"
+            )
+          }
+          rightIcon={<Entypo name="export" size={20} color={colors.blue} />}
+        />
 
-      <View style={styles.seperator} />
+        <RowSeperator />
 
-      <TouchableOpacity style={styles.row}>
-        <Text style={styles.text}>React Native By Example</Text>
-        <Entypo name="export" size={20} color={color.blue} />
-      </TouchableOpacity>
+        <RowItem
+          text="React Native By Example"
+          onPress={() => openLink("https://reactnativebyexample.com")}
+          rightIcon={<Entypo name="export" size={20} color={colors.blue} />}
+        />
+      </ScrollView>
     </SafeAreaView>
   );
 };
